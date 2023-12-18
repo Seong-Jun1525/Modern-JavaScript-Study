@@ -125,6 +125,11 @@ document.write("My name is " + name)
 카멜 표기법의 예) nameList, totalScore, userName, ... 등
 ```
 
+### 변수 사용법
+1. var 변수보다 let, const를 사용합니다.
+2. 전역변수는 최소한으로 사용합니다.
+3. 객체선언은 const를 사용합니다.
+
 ### 변수 선언 및 값 할당
 ```js
 let 변수명1
@@ -487,3 +492,263 @@ if(n !== null && n > 1) {
 ```
 ![마무리 2-1번](./readmeImg/3-마무리2번01.PNG)
 ![마무리 2-2번](./readmeImg/3-마무리2번02.PNG)
+
+# 함수
+`함수`는 `동작해야 할 목적대로 여러 개의 명령을 묶는 것` 입니다.
+
+### add 함수
+```js
+function addNum(n1, n2) { // 함수선언. 매개변수 n1, n2
+    return n1 + n2
+}
+
+let num1 = 10
+let num2 = 20
+let sum = addNum(num1, num2)
+// 함수실행. 매개변수 num1, num2넘기기. 반환값을 sum 변수에 저장
+console.log(sum)
+```
+![함수예시](./readmeImg/함수예시.PNG)
+
+### 매개변수의 기본값 지정하기
+```js
+function addNum(a, b = 3, c = 10) {
+    return a + b + c
+}
+console.log(addNum(5, 10, 15))
+console.log(addNum(5, 10))
+console.log(addNum(5))
+```
+![매개변수기본값설정](./readmeImg/매개변수기본값설정.PNG)
+
+## 스코프 - 변수의 유효범위
+### 지역변수 (= 지역스코프)
+특정영역 안에서만 사용가능
+```js
+function sum(a, b) {
+    let result = a + b
+    return result
+}
+console.log(result) // error
+```
+
+### 전역변수 (= 전역스코프)
+프로그램 전체에서 사용가능
+```js
+var hi = 'hello'
+
+function greeting() {
+    console.log(hi)
+}
+
+greeting() // hello 출력
+```
+```
+자바스크립트에서는 예약어 없이 변수를 선언하면 해당 변수는 전역변수가 됩니다.
+
+let이나 const를 사용한 변수도 프로그램의 맨 앞에 선언하면 프로그램 전체에서 사용할 수 있습니다. 그런데 이때는 '전역 스코프를 가진다' 하지 않고 '스크립트 스코프를 가진다'라고 합니다.
+```
+
+### 블록 스코프
+```
+let나 const를 사용해 만든 변수는 기본적으로 변수가 선언된 블록 안에서만 유효합니다. 이것을 '블록 스코프를 가진다'라고 하고 '블록변수'라고 합니다.
+```
+## 익명함수
+### 변수에 할당해서 사용하는 익명함수
+```js
+// 익명함수
+let sum = function(a,b) {
+    return a+b
+}
+console.log(`함수 실행 결과 : ${sum(10, 20)}`)
+```
+![익명함수](./readmeImg/익명함수.PNG)
+
+### 즉시 실행 함수
+한 번만 실행하는 함수일 경우 함수를 정의하면서 동시에 실행시킬 수 있습니다. 이것을 `즉시 실행 함수`라고 합니다.
+```js
+// 즉시 실행 함수
+(function(a,b){
+    let sum = a+b
+    console.log(sum) 
+}) (10, 20)
+```
+
+### 화살표 함수 (= 애로펑션(arrow function))
+- 표현식을 사용해서 함수를 정의할 경우에만 사용합니다.
+- 매개변수가 없을 경우 {}를 생략할 수 있습니다.
+```js
+// 화살표 함수
+let hi = function() {
+    console.log('안녕')
+}
+hi()
+// 위와 같은 함수를 화살표 함수로 변형
+let bye = () => console.log('잘가')
+bye()
+```
+![화살표함수](./readmeImg/화살표%20함수.PNG)
+
+## 콜백함수
+콜백함수는 다른 함수의 인수로 사용하는 함수를 가리킵니다.
+```js
+// 콜백 함수
+function showData(name, age) {
+    alert(`${name}님의 나이는 ${age}입니다.`)
+}
+function getData(callback) {
+    let userName = prompt("이름을 입력하세요")
+    let userAge = parseInt(prompt("나이를 입력하세요"))
+
+    callback(userName, userAge)
+}
+getData(showData)
+```
+![콜백예제1](./readmeImg/콜백1.PNG)
+![콜백예제2](./readmeImg/콜백2.PNG)
+![콜백예제3](./readmeImg/콜백3.PNG)
+
+## 자바스크립트 함수는 1급 시민
+- 1급 시민 조건
+    1. 변수에 할당할 수 있어야 합니다.
+    2. 다른 함수의 인자로 사용할 수 있어야 합니다.
+    3. 다른 함수에서 반환값으로 반환할 수 있어야 합니다.
+### 변수에 함수 할당
+```js
+// 변수에 함수 할당
+let sum = (a, b) => a + b
+sum(2, 10)
+
+function add(a, b) {
+    return a + b
+}
+let sum2 = add
+console.log(sum2(2, 10))
+```
+![변수에 함수할당](./readmeImg/변수에함수할당.PNG)
+
+### 함수를 다른 함수에 전달
+```js
+// 함수를 다른 함수로 전달
+function hello() {
+    return "안녕하세요"
+}
+function bye() {
+    return "잘가세요"
+}
+function userCheck(name, fn) {
+    console.log(`${name}님`, fn())
+}
+userCheck("Jun", hello)
+userCheck("Kim", bye)
+```
+![함수전달](./readmeImg/함수를%20다른함수에%20전달.PNG)
+
+### 함수에서 다른 함수반환
+```js
+// 함수에서 다른 함수로 반환
+let init = () => {
+    return function(a, b) {
+        return a - b > 0 ? a - b : b - a
+    }
+}
+console.log(`${init()(10, 20)}`)
+```
+![함수반환](./readmeImg/함수에서다른함수반환.PNG)
+
+## 전개구문
+전개구문은 배열처럼 값이 다양한 자료를 한꺼번에 인수로 넘겨주거나 배열과 배열을 합할 때 배열을 하나의 덩어리로 처리해야 할 때 아주 유용합니다.
+```js
+// 전개구문: '...'기호를 사용
+// 나머지 매개변수
+function addNum(a, b) {
+    return a + b
+}
+
+addNum(10, 20)          // 30
+addNum(10, 20, 30, 40)  // 30
+
+function addNum(...numbers) { // 나머지 매개변수
+    let sum = 0
+
+    for(let number of numbers) {
+        sum += number
+    }
+
+    return sum
+}
+
+console.log(addNum(10, 20))          // 30
+console.log(addNum(10, 20, 30, 40)) // 100
+```
+![전개구문](./readmeImg/전개구문.PNG)
+나머지 매개변수는 매개변수 중 마지막에 작서해야 합니다.
+
+## 타이머 함수
+실행할 함수와 시간을 지정하는 함수입니다. 타이머 함수에 실행할 함수를 인수로 받기 때문에 콜백함수를 매개변수로 사용합니다.
+
+### 일정 시간마다 반복하기 - setInterval() <br> 반복 실행 멈추기 - clearInterval()
+```js
+// setInterval()와 clearInterval()함수
+let counter = 0
+let timer = setInterval(() => {
+    document.write("안녕")
+    counter++
+    if (counter == 5) {
+        clearInterval(timer)
+        console.log("clearInterval()")
+    }
+}, 1000)
+```
+![setInterval&clearInterval()](./readmeImg/setInterval()&clearInterval().PNG)
+```
+setInterval(콜백함수, 시간)
+이런식으로 작성합니다. 콜백함수는 ()없이 함수명만 작성합니다.
+이유는 콜백함수를 직접 실행하는 것이 아니라 setInterval()함수에서 인수로 사용하기 때문입니다.
+```
+
+### 특정시간 이후에 실행하기 - setTimeout()
+```js
+// 특정 시간 이후 실행 setTimeout()
+setTimeout(() => {
+    document.write("안녕")
+}, 1000)
+```
+
+## 마무리문제
+### 1번 숫자가 양수인지 음수인지 판별하기
+```js
+// 04 마무리 문제1
+function check(num) {
+    if(num > 0) alert(`${num} 양수`)
+    else if(num < 0) alert(`${num} 음수`)
+    else alert(`${num} 0`)
+}
+let num = parseInt(prompt("숫자를 입력하세요"))
+// console.log(typeof(num))
+if(num > 0 || num < 0 || num === 0) {
+    check(num)
+}
+```
+![4 마무리 1번](./readmeImg/4마무리-1.PNG)
+![4 마무리 1번](./readmeImg/4마무리-1-1.PNG)
+
+### 2번 두 수의 최대 공약수 구하기
+```js
+// 04 마무리 문제2
+function bigNum(a,b) {
+    return a > b ? a : b
+}
+
+let num1 = parseInt(prompt('숫자를 입력하세요'))
+let num2 = parseInt(prompt('숫자를 입력하세요'))
+let bn = bigNum(num1, num2)
+let count = 0
+for (let i = 1; i <= bn; i++) {
+    if (num1 % i == 0 && num2 % i == 0) {
+        count = i
+    }
+}
+console.log(`${num1}과 ${num2}의 최대공약수 : ${count}이다`)
+```
+![4 마무리 1번](./readmeImg/4마무리-2.PNG)
