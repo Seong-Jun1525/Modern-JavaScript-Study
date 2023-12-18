@@ -281,3 +281,209 @@ c = parseFloat((f - 32) / 1.8).toFixed(1)
 
 alert(`화씨온도는 ${f}이고 섭씨온도는 ${c}입니다.`)
 ```
+
+# 연산자와 제어문
+## 연산자
+### 산술연산자
+연산자 | 기능 | 사용 예
+-- | -- | --
+\+ | 더하기 | c = a + b
+\- | 빼기 | c = a - b
+\* | 곱하기 | c = a * b
+/ | 나누기 | c = a / b
+% | 나머지 구하기 | c = a % b
+++ | 1 증가 | a++
+-- | 1 감소 | a--
+
+### 연결 연산자 +
+```js
+let name = 'Jun'
+console.log(name + '님 안녕하세요')
+```
+
+### 할당 연산자
+연산자 | 기능 | 사용 예
+-- | -- | --
+= | 오른쪽을 왼쪽에 할당 | y = x
++= | y = y + x | y += x
+-= | y = y - x | y -= x
+*= | y = y * x | y *= x
+/= | y = y / x | y /= x
+%= | y = y % x | y %= x
+
+### 비교연산자
+연산자 | 기능
+-- | -- 
+== | 값이 같으면 true
+=== | 값과 데이터 유형이 같으면 true
+!= | 값이 같지 않아야 true
+!== | 값과 데이터 유형이 모두 같지 않아야 true
+< | 왼쪽 피연산자 값이 오른쪽 보다 작아야 true
+<= | 왼쪽 피연산자 값이 오른쪽 보다 작거나 같으면 true
+\> | 왼쪽 피연산자 값이 오른쪽 보다 커야 true
+\>= | 왼쪽 피연산자 값이 오른쪽 보다 크거나 같으면 true
+
+### 논리연산자
+연산자 | 기능
+-- | --
+! (Not 연산자) | 피연산자 값과 반대의 값을 가져야 true
+&& (AND 연산자) | 피연산자 값이 모두 true일 경우 true
+\|\| (OR 연산자) | 피연산자 값이 하나라도 true일 경우 true
+
+## 조건문
+```js
+if (조건1) {
+    // 조건 1이 참일 경우 실행
+} else if(조건2) {
+    // else if문은 조건이 여러 개일 경우 사용
+    // 조건이 하나만 있을 경우 생략 가능
+    // 조건 2가 참일 경우 실행
+} else {
+    // 어떤 조건도 맞지 않을 경우 실행
+}
+```
+### 조건연산자
+```js
+// (조건) ? true일 때 실행할 명령 : false일 때 실행할 명령
+
+let min = (num1 < num2) ? num1 : num2
+```
+
+### 짝수와 홀수 판별 프로그램
+```js
+let x = prompt("숫자를 입력하세요")
+
+if(x !== null) {
+    (x % 2 === 0) ? alert("짝수") : alert("홀수")
+} else {
+    alert("취소")
+}
+```
+
+### switch 문
+```js
+let subject = prompt("과목 선택: 1-HTML, 2-CSS, 3- JavaScript")
+if(subject !== null) {
+    switch(subject) {
+        case "1": 
+            document.write("HTML")
+            break
+        case "2": 
+            document.write("CSS")
+            break
+        case "3": 
+            document.write("JavaScript")
+            break
+        default:
+            document.write("다시")
+    }
+}
+```
+
+## 반복문
+### for문
+```js
+for(초깃값; 조건; 증가식) {...}
+```
+### forEach문
+```js
+const numbers = [1, 2, 3, 4]
+numbers.forEach(function(number) {
+    document.write(`${number}`)
+})
+```
+### for...in문
+반복해서 객체의 값을 가져와서 처리할 수 있게 합니다.
+```js
+for (key in book) {
+    document.write(`${key} : ${book.key}`)
+}
+```
+### for...of문
+문자열이나 배열과 같은 반복가능 자료에서 사용되는 반복문입니다.
+```js
+const numbers = [1, 2, 3, 4]
+// numbers.forEach(function(number) {
+//     document.write(`${number}`)
+// })
+for(number of numbers) {
+    document.write(`${number}`)
+}
+```
+
+### while문 do...while문
+차이는 `while문`은 조건이 참일 경우 실행되고 `do...while문`은 무조건 반복문을 한번 실행 후 조건을 체크합니다.
+
+### break와 continue
+`break`는 해당 반복문의 종료조건이 되기 전에 반복문을 빠져나올 때 사용합니다.
+
+`continue`문은 실행 중인 반복문장을 건너뛰고 반복문의 맨 앞으로 되돌아가서 다음 반복과정으로 넘어갑니다.
+
+### 소수인지 여부 확인하는 프로그램
+```js
+let n = parseInt(prompt("자연수를 입력하세요"))
+let i = 2
+console.log(typeof(i))
+if(n !== null && n > 2) {
+
+    while(i < n) {
+        if (n % i !== 0) {
+            i++
+            console.log("i: " + i)
+            if(i === n) {
+                document.write("소수")
+                break
+            }
+            continue
+        }
+        else {
+            document.write("소수X")
+            break
+        }
+    }
+} else if(n === 2) {
+    document.write("소수")
+} else if(n === 1) {
+    document.write("소수도 합성수도 아님")
+} else {
+    alert("취소")
+}
+```
+
+## 마무리문제
+### 1번 10보다 큰 자연수 찾기
+```js
+const arrs = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
+let arrs2 = []
+let j = 0
+for(let i = 0; i < arrs.length; i++) {
+    if(arrs[i] > 10) {
+        arrs2[j] = arrs[i]
+        j++
+    }
+}
+
+for(let i = 0; i < arrs2.length; i++) {
+    document.write(arrs2[i] + " ")
+}
+```
+![마무리 1번](./readmeImg/3-마무리1번.PNG)
+### 2번 주어진 수에서 짝수만 더하기
+```js
+let n = parseInt(prompt("1보다 큰 수를 입력하세요"))
+let i = 0
+let j = 0
+if(n !== null && n > 1) {
+    while(i <= n) {
+        if(i % 2 === 0) {
+            j += i
+            document.write(`${i} --- ${j}\n\n`)
+        }
+        i++
+    }
+} else {
+    alert("잘못입력")
+}
+```
+![마무리 2-1번](./readmeImg/3-마무리2번01.PNG)
+![마무리 2-2번](./readmeImg/3-마무리2번02.PNG)
