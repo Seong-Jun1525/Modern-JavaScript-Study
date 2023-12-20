@@ -1,0 +1,46 @@
+.container {
+    width: 1000px;
+    margin: 0 auto;
+}
+
+fieldset {
+    padding: 0 100px;
+}
+
+legend {
+    font-size: 25px;
+}
+
+li {
+    margin-bottom: 15px;
+}
+
+label {
+    font-size: 20px;
+}
+
+.input-box {
+    font-size: 20px;
+    width: 80%;
+}
+
+
+.clicked {
+    background: yellow;
+}
+
+.box {
+    height: 500px;
+    margin-top: 30px;
+    border: 1px solid black;
+    font-size: 25px;
+    padding: 40px;
+}
+.box.dark {
+    border-color: white;
+}
+
+.dark {
+    background: #000;
+    color: white;
+}

@@ -455,44 +455,6 @@ if(n !== null && n > 2) {
 }
 ```
 
-## 마무리문제
-### 1번 10보다 큰 자연수 찾기
-```js
-const arrs = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]
-let arrs2 = []
-let j = 0
-for(let i = 0; i < arrs.length; i++) {
-    if(arrs[i] > 10) {
-        arrs2[j] = arrs[i]
-        j++
-    }
-}
-
-for(let i = 0; i < arrs2.length; i++) {
-    document.write(arrs2[i] + " ")
-}
-```
-![마무리 1번](./readmeImg/3-마무리1번.PNG)
-### 2번 주어진 수에서 짝수만 더하기
-```js
-let n = parseInt(prompt("1보다 큰 수를 입력하세요"))
-let i = 0
-let j = 0
-if(n !== null && n > 1) {
-    while(i <= n) {
-        if(i % 2 === 0) {
-            j += i
-            document.write(`${i} --- ${j}\n\n`)
-        }
-        i++
-    }
-} else {
-    alert("잘못입력")
-}
-```
-![마무리 2-1번](./readmeImg/3-마무리2번01.PNG)
-![마무리 2-2번](./readmeImg/3-마무리2번02.PNG)
-
 # 함수
 `함수`는 `동작해야 할 목적대로 여러 개의 명령을 묶는 것` 입니다.
 
@@ -715,40 +677,257 @@ setTimeout(() => {
 }, 1000)
 ```
 
-## 마무리문제
-### 1번 숫자가 양수인지 음수인지 판별하기
+# DOM의 기초
+문서 객체 모델(Document Object Model)은 웹 브라우저에서 웹 문서를 분석하고 인식할 때 필요한 가장 기본적인 개념입니다.
+
+## DOM이란?
+```
+웹에서 자바스크립트를 사용하는 가장 큰 이유는 어떤 조건에 맞거나 사용자 동작이 있을 때 웹 문서 전체 또는 일부분이 동적으로 반응하기 때문입니다. 이렇게 하려면 웹 문서에 담겨있는 모든 요소를 따로 제어할 수 있어야 합니다. 이때 DOM이 필요합니다.
+
+DOM이란 자바스크립트 같은 프로그래밍 언어로 웹 문서에 접근하고 제어할 수 있도록 웹 문서를 체계적으로 정리하는 방법입니다. DOM에서는 웹 문서를 하나의 객체로 정의하고 모든 요소도 각각 객체로 정의합니다.
+
+웹 문서 객체들도 객체이므로 프로퍼티와 메서드를 가지고 있습니다.
+```
+### DOM트리
+- html
+    - head
+        - meta
+        - title
+    - body
+        - h1
+        - img
+        - p
+## 웹 요소에 접근하는 방법
+### 하나의 요소에 접근하는 함수 querySelector()
 ```js
-// 04 마무리 문제1
-function check(num) {
-    if(num > 0) alert(`${num} 양수`)
-    else if(num < 0) alert(`${num} 음수`)
-    else alert(`${num} 0`)
-}
-let num = parseInt(prompt("숫자를 입력하세요"))
-// console.log(typeof(num))
-if(num > 0 || num < 0 || num === 0) {
-    check(num)
+document.querySelector(선택자)
+```
+
+#### CSS 선택자의 종류
+선택자 | 기능 | 사용 예
+-- | -- | --
+타입선택자 | 특정 태그를 사용한 모든 요소 | p {...}
+class 선택자 | 클래스명을 사용하는 특정 부분 | .item {...}
+id 선택자 | id명을 사용하는 특정 부분 | #container {...}
+하위 선택자 | A요소의 하위에 있는 모든 B요소 | form input {...}
+자식 선택자 | A요소의 하위에 있는 요소 중 자식 레벨의 B요소 | ul > li {...}
+
+객체 포함된 함수를 `메서드`라고 합니다. `querySelector()메서드를 사용하면 지정한 선택자를 사용한 요소 중에서 첫 번째 요소에 접근할 수 있습니다.`
+
+### 모든 요소를 가져오는 함수 quertSelectorAll()
+여러 개의 요소를 가져올 때 사용합니다.
+```js
+document.querySelectorAll(선택자)
+```
+```
+이렇게 가져온 요소들은 모두 NodeList 형태로 저장이 됩니다.
+
+NodeList에 저장된 요소들은 배열처럼 인덱스를 사용해서 접근할 수 있습니다.
+```
+```js
+document.querySelectorAll(선택자)[index]
+```
+
+### 웹 요소의 내용을 가져오고 수정하기
+프로퍼티 | 설명
+-- | --
+웹 요소.innerText | 웹 브라우저 창에 보이는 내용만 가져옵니다.
+웹 요소.innerHTML | 요소안에 잇는 태그와 내용을 함께 가져와서 보여줍니다.
+웹 요소.textContent | 요소의 내용을 가져오되, 웹 브라우저 창에 보이는 대로가 아니라 소스에 있는 대로 가져옵니다.
+
+```
+웹 요소의 내용을 가져올 경우에는 innerText, textContent 프로퍼티를 사용하고 웹 브라우저 창에 표시되지 않은 내용까지 모두 가져오려면 textContent 프로퍼티를 사용해야 합니다. 그리고 요소안에 있는 태그까지 함께 가져오려면 innerHTML 프로퍼티를 사용해야 합니다. 
+```
+
+## 자바스크립트로 스타일 수정하기
+### CSS 속성에 접근하고 수정하기
+```js
+const element = document.querSelector(".element")
+element.style.속성명
+```
+### classList 프로퍼티
+classList는 요소에 적용한 클래스 스타일을 모두 모아 놓은 프로퍼티 입니다.
+
+### 클래스 스타일 추가, 삭제
+```js
+const element = document.querSelector(".element")
+element.classList.add(클래스명)
+element.classList.remove(클래스명)
+```
+
+### 특정 클래스 스타일이 있는 요소를 찾아 주는 함수 contains()
+```js
+const element = document.querSelector(".element")
+element.classList.contains(클래스명)
+```
+
+### 클래스 스타일에 토글하기
+```js
+const bttn = document.querySelector("button")
+const box = document.querySelector(".box")
+bttn.onclick = function() {
+    box.classList.toggle("dark")
+    document.body.classList.toggle("dark")
 }
 ```
-![4 마무리 1번](./readmeImg/4마무리-1.PNG)
-![4 마무리 1번](./readmeImg/4마무리-1-1.PNG)
+![토글1](./readmeImg/토글1.PNG)
+![토글2](./readmeImg/토글2.PNG)
 
-### 2번 두 수의 최대 공약수 구하기
-```js
-// 04 마무리 문제2
-function bigNum(a,b) {
-    return a > b ? a : b
-}
+## DOM에서 폼 다루기
+```html
+<form name="order">
+    <fieldset>
+        <legend>주문정보</legend>
+        <ul>
+            <li>
+                <label for="orderName">이&nbsp;&nbsp;&nbsp;름 : </label>
+                <input type="text" class="input-box" id="orderName" name="orderName">
+            </li>
+            <li>
+                <label for="tel">연락처 : </label>
+                <input type="text" class="input-box" id="tel" name="tel">
+            </li>
+        </ul>
+    </fieldset>
 
-let num1 = parseInt(prompt('숫자를 입력하세요'))
-let num2 = parseInt(prompt('숫자를 입력하세요'))
-let bn = bigNum(num1, num2)
-let count = 0
-for (let i = 1; i <= bn; i++) {
-    if (num1 % i == 0 && num2 % i == 0) {
-        count = i
-    }
-}
-console.log(`${num1}과 ${num2}의 최대공약수 : ${count}이다`)
+    <fieldset>
+        <legend>상품정보</legend>
+        <ul>
+            <li>
+                <label for="product">이&nbsp;&nbsp;&nbsp;름 : </label>
+                <input type="text" class="input-box" id="product" name="product">
+            </li>
+            <li>
+                <label for="count">갯&nbsp;&nbsp;&nbsp;수 : </label>
+                <input type="text" class="input-box" id="count" name="count">
+            </li>
+        </ul>
+    </fieldset>
+</form>
 ```
-![4 마무리 1번](./readmeImg/4마무리-2.PNG)
+### id나 class 속성값을 사용해서 접근하기
+```js
+document.querySelector("#orderName")
+```
+
+### 텍스트 필드에 입력한 값 가져오기
+```js
+document.querySelector("#orderName").value
+```
+
+### name속성 값을 사용해 접근하기
+이 방법을 사용하려면 form요소에 name속성이 다 있어야 합니다.
+```js
+document.order.product.value
+```
+
+### id, class, name 속성이 전부 없다면 폼 배열을 사용하기
+```js
+document.forms // 모든 form을 가져온다
+document.forms[0].elements // 첫 번째 form에 있는 폼 요소를 모두 가져온다
+```
+
+## 선택 목록과 항목에 접근하기
+```html
+<form>
+    <label for="class" class="reg">학과</label>
+    <select name="major" id="major">
+        <option>--- 학과 선택 ---</option>
+        <option value="archi">건축공학과</option>
+        <option value="mechanic">기계공학과</option>
+        <option value="indust">산업공학과</option>
+        <option value="elec">전지전자공학과</option>
+        <option value="computer">컴퓨터공학과</option>
+        <option value="chemical">화학공학과</option>
+    </select>
+</form>
+```
+### 선택목록 접근하기
+```js
+document.querySelector("#major").options
+```
+![선택목록과 항목접근](./readmeImg/선택목록과%20항목접근.PNG)
+
+```
+선택메뉴에서 몇 번째 항목을 선택했는지는 selectedIndex 값을 사용해서 알 수 있습니다.
+
+선택한 항목의 내용을 가져올 때는 innerText프로퍼티를 사용합니다.
+
+선택목록에 함수를 연결할 때는 onclick이 아닌 onchange()를 사용합니다.
+```
+
+### 선택한 항목 표시
+```js
+const selectMenu = document.querySelector("#major")
+
+function displaySelect() {
+    let selectedText = selectMenu.options[selectMenu.selectedIndex].innerText
+    alert(`[${selectedText}]를 선택했습니다.`)
+}
+selectMenu.onchange = displaySelect
+```
+![선택한 항목 표시](./readmeImg/선택항목표시.PNG)
+
+## 라디오 버튼과 체크박스 접근하기
+```
+라디오 버튼과 체크박스의 차이점
+
+라디오 버튼: 하나만 선택 가능
+체크박스: 다수 선택 가능
+```
+
+```html
+<form name="testForm">
+    <fieldset>
+        <legend>신청과목</legend>
+        <p>과목을 선택하세요</p>
+        <label>
+            <input type="radio" name="subject" value="speaking">
+            회화
+        </label>
+        <label>
+            <input type="radio" name="subject" value="grammer">
+            작품
+        </label>
+        <label>
+            <input type="radio" name="subject" value="writing">
+            작문
+        </label>
+    </fieldset>
+</form>
+```
+![라디오버튼접근1](./readmeImg/라디오버튼%20접근.PNG)
+![라디오버튼접근2](./readmeImg/라디오버튼%20접근2.PNG)
+
+```html
+<fieldset>
+    <legend>관심있는 과목선택</legend>
+    <p>과목을 선택하세요</p>
+    <label>
+        <input type="checkbox" name="interesting" value="nodejs">
+        Node.js
+    </label>
+    <label>
+        <input type="checkbox" name="interesting" value="javascript">
+        JavaScript
+    </label>
+    <label>
+        <input type="checkbox" name="interesting" value="react">
+        React
+    </label>
+</fieldset>
+```
+### checked 속성을 사용해 접근하기
+![querySelector사용](./readmeImg/checked속성.PNG)
+```js
+document.querySelector("input[name='interesting']:checked")
+```
+![querySelector사용](./readmeImg/checked속성1.PNG)
+
+checkbox는 여러개를 선택할 수 있기 때문에 아래처럼 해야지
+제대로 나옵니다.
+
+```js
+document.querySelectorAll("input[name='interesting']:checked")
+```
+![querySelectorAll사용](./readmeImg/checked속성2.PNG)
