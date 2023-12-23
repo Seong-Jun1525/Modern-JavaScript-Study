@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>캐러셀 만들기</title>
+    <style>
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .carousel {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 350px;
+            background-size: cover;
+        }
+        .arrow {
+            font-size: 35px;
+            background: green;
+            width: 30px;
+            padding: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>좌우 화살표를 눌러보세요</h1>
+        <div class="carousel">
+            <div class="arrow" id="left">&lang;</div>
+            <div class="arrow" id="right">&rang;</div>
+        </div>
+    </div>
+    <script src="./js/carousel.js"></script>
+</body>
+</html>

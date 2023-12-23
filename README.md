@@ -931,3 +931,237 @@ checkbox는 여러개를 선택할 수 있기 때문에 아래처럼 해야지
 document.querySelectorAll("input[name='interesting']:checked")
 ```
 ![querySelectorAll사용](./readmeImg/checked속성2.PNG)
+
+# 이벤트와 이벤트 처리기
+## 이벤트란?
+```
+웹 브라우저나 사용자가 실행하는 어떤 동작을 의미합니다.
+이벤트는 웹 페이지를 읽어 오거나 링크를 클릭하는 것처럼
+웹 문서 영역에서 이루어지는 동작만을 말합니다.
+```
+### 문서로딩이벤트
+이벤트 | 발생하는 순간
+-- | --
+abort | 웹 문서가 완전히 로딩되기 전에 불러오기를 멈추었을 때
+error | 문서가 정학히 로딩되지 않았을 때
+load | 문서로딩이 끝났을 때
+resize | 문서화면의 크기가 바뀌었을때
+scroll | 문서화면이 스크롤되었을 때
+unload | 문서를 벗어날 때
+
+```js
+window.onload = alert("안녕?")
+```
+![이벤트1](./readmeImg/이벤트1.PNG)
+
+### 마우스이벤트
+이벤트 | 발생하는 순간
+-- | --
+click | HTML요소를 클릭했을 때
+dbclick | HTML요소를 더블클릭했을 때
+mousedown | 요소에서 마우스 버튼을 눌렀을 때
+mousemove | 요소에서 마우스 포인터를 움직였을 때
+mouseover | 마우스 포인터를 요소 위로 옮길 때
+mouseout | 마우스 포인터가 요소를 벗어날 때
+mouseup | 요소 위에 올려놓은 마우스 버튼에서 손을 뗄 때
+
+```js
+const button = document.querySelector("button")
+
+button.onclick = function() {
+    document.body.style.backgroundColor = "red"
+}
+```
+
+### 키보드 이벤트
+이벤트 | 발생하는 순간
+-- | --
+keydown | 키를 누르는 동안
+keypress | 키를 눌렀을 때
+keyup | 키에서 손을 뗄 때
+
+```js
+const body = document.body
+const result = docuement.querySelector("#result")
+
+body.addEventListener("keydown", (e) => {
+    result.innerText = `
+        code: ${e.code},
+        key: ${e.key}
+    `
+})
+```
+
+### 폼 이벤트
+이벤트 | 발생하는 순간
+-- | --
+blur | 폼 요소에 포커스를 잃었을 때
+change | 목록이나 체크 상태 등이 변경되었을 때
+focus | 폼 요소에 포커스를 놓았을 때
+reset | 폼이 리셋되었을 때
+submit | [submit]버튼을 클릭했을 때
+
+## 이벤트 처리기 (= 이벤트 헨들러)
+### HTML 태그에 함수 연결하기
+```html
+<!-- 예시 -->
+<button onclick="fn()">
+```
+### 웹 요소에 함수 연결하기
+```js
+element.onclick = fn()
+```
+
+### 이벤트 리스너로 이벤트 처리하기
+```js
+// 요소.addEventListener(이벤트, 함수, 캡처여부)
+// 캡처여부
+// true: 캡처링
+// false: 버블링
+// 캡처여부의 기본값은 false
+
+// 이미 만들어 놓은 함수 연결
+const button = document.querySelector("button")
+function changeBackground() {
+    document.body.style.backgroundColor = "yellow"
+}
+button.addEventListener("click", changeBackground)
+
+// 익명함수 사용
+button.addEventListener("click", function() {
+    document.body.style.backgroundColor = "yellow"
+})
+
+// 화살표 함수 사용
+button.addEventListener("click", () => {
+    document.body.style.backgroundColor = "yellow"
+})
+```
+
+### 모달박스 만들기
+```js
+const open = document.querySelector('#open')
+const modalBox = document.querySelector('#modal-box')
+const close = document.querySelector("#close")
+
+open.addEventListener("click", () => {
+    modalBox.classList.toggle("active")
+})
+close.addEventListener("click", () => {
+    modalBox.classList.remove("active")
+})
+```
+
+## event 객체
+이벤트 객체에서 사용할 수 있는 메서드는 기본동작을 취소하는 `preventDefault()`뿐 입니다.
+
+### 프로퍼티
+프로퍼티 | 기능
+-- | --
+altKey | 이벤트가 발생했을 때 alt를 누르고 있었는지 여부를 확인 후 boolean 값을 반환
+shiftKey | 이벤트가 발생했을 때 shift를 누르고 있었는지 여부를 확인 후 boolean 값을 반환
+ctrlKey | 이벤트가 발생했을 때 ctrl을 누르고 있었는지 여부를 확인 후 boolean 값을 반환
+charCode | keypress 이벤트가 발생했을 때 어떤 키가 눌렀는지 유니코드 값으로 반환
+which | 키보드와 관련된 이벤트가 발생했을 때 키의 유니코드 값을 반환
+clientX | 이벤트가 발생한 가로 위치를 반환
+clientY | 이벤트가 발생한 세로 위치를 반환
+pageX | 현재문서를 기준으로 이벤트가 발생한 가로 위치를 반환
+pageY | 현재문서를 기준으로 이벤트가 발생한 가로 위치를 반환
+screenX | 현재화면을 기준으로 이벤트가 발생한 가로 위치를 반환
+screenY | 현재화면을 기준으로 이벤트가 발생한 가로 위치를 반환
+target | 이벤트가 발생한 대상을 반환
+timeStamp | 이벤트가 발생한 시간을 밀리초 단위로 반환
+type | 발생한 이벤트 이름을 반환
+button | 마우스 키 값을 반환
+
+### 이벤트에서 키 값 알아내기
+```
+e.code
+e.key
+```
+
+## 자바스크립트로 캐러셀 만들기
+```js
+const carousel = document.querySelector(".carousel")
+
+// 이미지 배열
+const pics = ["pic1.jpg", "pic2.jpg", "pic3.jpg", "pic4.jpg"]
+
+// 첫 번째 이미지를 기본으로 표시
+carousel.style.backgroundImage = `url(./img/${pics[0]})`
+
+const arrows = document.querySelectorAll(".arrow")
+let i = 0 // 배열 인덱스
+arrows.forEach(arrow => {
+    arrow.addEventListener("click", (e) => {
+        if(e.target.id === "left") {
+            i-- // 이전 이미지로 이동
+            if(i < 0) { // 첫번째 이미지인 경우
+                i = pics.length - 1 // 마지막 이미지로 이동
+            }
+        }
+        else if(e.target.id === "right") {
+            i++
+            if(i >= pics.length) {
+                i = 0
+            }
+        }
+        carousel.style.backgroundImage = `url(./img/${pics[i]})`
+    })
+})
+```
+![캐러셀](./readmeImg/캐러셀1.PNG)
+![캐러셀](./readmeImg/캐러셀2.PNG)
+
+## 이벤트 전파
+이벤트 전파란 해당 요소를 감싸고 있는 부모요소, 그리고 그 요소의 부모요소에서도 똑같이 이벤트가 처리되는 것 입니다.
+### 이벤트 버블링
+특정 요소에서 이벤트가 발생했을 때 그 이벤트가 해당 요소뿐만 아니라 그 요소의 부모요소, 부모요소의 부모요소에서도 똑같이 발생한 것으로 간주하는 것 입니다.
+
+```html
+<div class="a" onclick="console.log('div')">
+    div
+    <section class="b" onclick="console.log('section')">
+        section
+        <p class="c" onclick="console.log('p')">p</p>
+    </section>
+</div>
+```
+![버블링](./readmeImg/이벤트버블링.PNG)
+```html
+<div class="a">
+    div
+    <section class="b">
+        section
+        <p class="c">p</p>
+    </section>
+</div>
+```
+```js
+const elements = document.querySelectorAll("*")
+
+for(let element of elements) {
+    element.addEventListener("click", e => (
+        console.log(
+            `e.target: ${e.target.tagName}, e.currentTarget: ${e.currentTarget.tagName}`
+        )
+    ))
+}
+```
+![버블링2](./readmeImg/이벤트버블링2.PNG)
+
+### 이벤트 캡처링
+이벤트 캡처링은 웹 요소에서 이벤트가 발생하면 일단 최상위 요소에서 시작해서 이벤트가 발생한 요소까지 차례대로 이벤트가 전파되는 방식입니다.
+
+```js
+const elements = document.querySelectorAll("*")
+
+for(let element of elements) {
+    element.addEventListener("click", e => (
+        console.log(
+            `e.target: ${e.target.tagName}, e.currentTarget: ${e.currentTarget.tagName}`
+        )
+    ), true)
+}
+```
+![캡처링](./readmeImg/이벤트캡처링.PNG)
